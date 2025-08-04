@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem 
+        id="menu_mass_confirm_root"
+        name="Mass Confirm Quotations"
+        sequence="10"/>
+    
+    <!-- Sub Menu -->
+    <menuitem 
+        id="menu_quotations_to_confirm"
+        name="Quotations to Confirm"
+        parent="menu_mass_confirm_root"
+        action="action_mass_confirm_wizard"
+        sequence="10"/>
+</odoo>
