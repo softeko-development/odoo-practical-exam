@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Softeko Odoo Intern Practical Question</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .pdf-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .pdf-page {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            page-break-after: always; /* For printing */
+        }
+        
+        img {
+            filter: brightness(1.6);
+            max-height: 90vh;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .pdf-container {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-container">
+        <h1>Softeko Odoo Intern Practical Exam Question</h1>
+        
+        <div class="image-container">
+            <div class="pdf-page">
+                <img src="images/1000057848.jpg" alt="Page 1">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057849.jpg" alt="Page 2">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057850.jpg" alt="Page 3">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057851.jpg" alt="Page 4">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057852.jpg" alt="Page 5">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057853.jpg" alt="Page 6">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057854.jpg" alt="Page 7">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057855.jpg" alt="Page 8">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057856.jpg" alt="Page 9">
+            </div>
+            <div class="pdf-page">
+                <img src="images/1000057857.jpg" alt="Page 10">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
