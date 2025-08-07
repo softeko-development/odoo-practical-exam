@@ -10,8 +10,6 @@
     'author': 'Your Name',
     'depends': ['sale', 'stock'],
     'data': [
-        'wizard/wizard_views.xml',
-        'views/menu_views.xml',
         'security/ir.model.access.csv',
         'views/sale_order_view.xml',
     ],
