@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_leave_approved" model="mail.template">
+        <field name="name">Leave Request Approved Notification</field>
+        <field name="model_id" ref="model_leave_request"/>
+        <field name="subject">Leave Request Approved for ${object.employee_id.name}</field>
+        <field name="email_from">${object.env.user.email_formatted}</field>
+        <field name="email_to">${','.join(object.env.ref('leave_approval_notify_hr.group_leave_hr').users.mapped('email_formatted'))}</field>
+        <field name="body_html">
+            <![CDATA[
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 16px; font-size: 13px;">
+                    Hello,
+                    <br/><br/>
+                    A leave request from ${object.employee_id.name} has been approved.
+                    <br/>
+                    Details:
+                    <ul>
+                        <li>Leave Type: ${object.leave_type_id.name}</li>
+                        <li>From: ${object.date_from}</li>
+                        <li>To: ${object.date_to}</li>
+                        <li>Reason: ${object.reason or 'N/A'}</li>
+                    </ul>
+                    <br/>
+                    Regards,
+                    <br/>
+                    ${object.env.user.name}
+                </p>
+            </div>
+            ]]>
+        </field>
+    </record>
+</odoo>

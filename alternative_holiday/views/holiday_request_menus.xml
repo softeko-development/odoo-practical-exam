@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_alternative_holiday_root" name="Alternative Holiday Request" sequence="10"/>
+
+    <!-- My Requests -->
+    <menuitem id="menu_alternative_holiday_my_requests"
+              name="My Requests"
+              parent="menu_alternative_holiday_root"
+              action="action_alternative_holiday_request"
+              sequence="20"/>
+
+    <!-- Manager Menu (no domain restriction) -->
+    <!-- <record id="action_alternative_holiday_manager_view" model="ir.actions.act_window">
+        <field name="name">Requests to Approve</field>
+        <field name="res_model">alternative.holiday.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'submitted')]</field>
+    </record> -->
+
+    <menuitem id="menu_alternative_holiday_manager_requests"
+              name="Manager"
+              parent="menu_alternative_holiday_root"
+              groups="hr.group_hr_manager"
+              sequence="30"/>
+    <menuitem id="menu_alternative_holiday_requests_to_approve"
+              name="Requests To Approve"
+              parent="menu_alternative_holiday_manager_requests"
+              action="action_alternative_holiday_manager_view"
+              groups="hr.group_hr_manager"/>
+</odoo>

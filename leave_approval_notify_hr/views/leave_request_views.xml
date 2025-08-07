@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- My Leave Requests List View -->
+    <record id="view_leave_request_list" model="ir.ui.view">
+        <field name="name">leave.request.list</field>
+        <field name="model">leave.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_id"/>
+                <field name="leave_type_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="reason"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for My Leave Requests and Requests to Approve -->
+    <record id="view_leave_request_form" model="ir.ui.view">
+        <field name="name">leave.request.form</field>
+        <field name="model">leave.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Submit" type="object" class="btn-primary" 
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" 
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reject" string="Reject" type="object" 
+                            invisible="state != 'submitted'"/>
+                    <!-- <button name="action_convert_to_leave" string="Convert to Official Leave" type="object" 
+                            invisible="state != 'approved'"/> -->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="manager_id" readonly="1"/>
+                        <field name="leave_type_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="reason"/>
+                        <field name="manager_comments" readonly="1"/>
+                    </group>
+                
+                <div class="oe_chatter">
+                    <field name="activity_ids"/>
+                </div>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Manager Approval List View -->
+    <record id="view_leave_request_manager_list" model="ir.ui.view">
+        <field name="name">leave.request.manager.list</field>
+        <field name="model">leave.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_id"/>
+                <field name="leave_type_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="reason"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- HR List View (Filtered for Approved) -->
+    <record id="view_leave_request_hr_list" model="ir.ui.view">
+        <field name="name">leave.request.hr.list</field>
+        <field name="model">leave.request</field>
+        <field name="arch" type="xml">
+
+            <list>
+                <field name="employee_id"/>
+                <field name="leave_type_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="reason"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- HR Form View (Notifications and Convert Button Only) -->
+    <record id="view_leave_request_hr_form" model="ir.ui.view">
+        <field name="name">leave.request.hr.form</field>
+        <field name="model">leave.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- <button name="action_convert_to_leave" string="Convert to Official Leave" type="object" 
+                            invisible="state != 'approved'"/> -->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="manager_id" readonly="1"/>
+                        <field name="leave_type_id" readonly="1"/>
+                        <field name="date_from" readonly="1"/>
+                        <field name="date_to" readonly="1"/>
+                        <field name="reason" readonly="1"/>
+                        <field name="manager_comments" readonly="1"/>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="activity_ids"/>
+                    </div>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_my_leave_requests" model="ir.actions.act_window">
+        <field name="name">My Leave Requests</field>
+        <field name="res_model">leave.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_leave_request_list"/>
+        <field name="views" eval="[(False, 'list'), (False, 'form')]"/>
+        <field name="domain">[('employee_id.user_id.id', '=', uid)]</field>
+    </record>
+
+    <record id="action_requests_to_approve" model="ir.actions.act_window">
+        <field name="name">Requests to Approve</field>
+        <field name="res_model">leave.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_leave_request_manager_list"/>
+        <field name="views" eval="[(False, 'list'), (False, 'form')]"/>
+        <field name="domain">[('employee_id.parent_id.user_id.id', '=', uid), ('state', '=', 'submitted')]</field>
+    </record>
+
+    <record id="action_all_requests" model="ir.actions.act_window">
+        <field name="name">All Requests</field>
+        <field name="res_model">leave.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_leave_request_hr_list"/>
+        <field name="views" eval="[(False, 'list'), (False, 'view_leave_request_hr_form')]"/>
+        <field name="domain">[('state', '=', 'approved')]</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_leave_approval_root" 
+              name="Leave Approval Notifier" 
+              sequence="10"/>
+    <menuitem id="menu_my_leave_requests" 
+              parent="menu_leave_approval_root" 
+              action="action_my_leave_requests" 
+              sequence="10"/>
+    <menuitem id="menu_requests_to_approve" 
+              parent="menu_leave_approval_root" 
+              action="action_requests_to_approve" 
+              groups="group_leave_manager"
+              sequence="20"/>
+    <menuitem id="menu_all_requests" 
+              parent="menu_leave_approval_root" 
+              action="action_all_requests" 
+              groups="group_leave_hr"
+              sequence="30"/>
+</odoo>

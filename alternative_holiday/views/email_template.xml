@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="email_template_holiday_request_submission" model="mail.template">
+            <field name="name">Alternative Holiday Request Submission</field>
+            <field name="model_id" ref="model_alternative_holiday_request"/>
+            <field name="subject">New Alternative Holiday Request from ${object.employee_id.name}</field>
+            <field name="email_from">${object.employee_id.user_id.email or ''}</field>
+            <field name="email_to">${object.employee_id.parent_id.user_id.email or ''}</field>
+            <field name="body_html"><![CDATA[
+                <div>
+                    <p>Dear ${object.employee_id.parent_id.name or 'Manager'},</p>
+                    <p>A new alternative holiday request has been submitted by ${object.employee_id.name}.</p>
+                    <p><strong>Details:</strong></p>
+                    <ul>
+                        <li><strong>Worked Date:</strong> ${object.worked_date}</li>
+                        <li><strong>Day Type:</strong> ${object.day_type == 'weekend' and 'Weekend' or 'Public Holiday'}</li>
+                        <li><strong>Requested Leave Date:</strong> ${object.requested_leave_date}</li>
+                        <li><strong>Reason:</strong> ${object.reason}</li>
+                    </ul>
+                    <p>Please review the request in Odoo under "Alternative Holiday Request > Manager > Requests To Approve".</p>
+                    <p>Best regards,<br/>Odoo</p>
+                </div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>
